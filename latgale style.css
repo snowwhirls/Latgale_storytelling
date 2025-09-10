@@ -1,0 +1,153 @@
+/* =====================================================
+   Latgale Style — Starter CSS
+   Filename: latgale style.css
+   Purpose: sensible defaults, variables, layout helpers
+   ===================================================== */
+
+/* 1) Design tokens */
+:root {
+  /* Colors */
+  --bg: #0f1115;
+  --panel: #151923;
+  --text: #e6e8ee;
+  --muted: #a7adbd;
+  --accent: #6ea8fe;
+  --accent-contrast: #0b1220;
+  --border: #222838;
+
+  /* Typography */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --text-base: 16px;
+  --leading: 1.6;
+
+  /* Spacing scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+
+  /* Radius & shadow */
+  --radius: 1rem;
+  --shadow: 0 10px 25px rgba(0,0,0,0.25), 0 2px 6px rgba(0,0,0,0.25);
+}
+
+/* 2) CSS reset – minimal, modern */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; font-size: var(--text-base); }
+body { margin: 0; font-family: var(--font-sans); line-height: var(--leading); color: var(--text); background: var(--bg); }
+img, picture, video, canvas, svg { display: block; max-width: 100%; }
+input, button, textarea, select { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* 3) Layout helpers */
+.container {
+  width: min(1100px, 92%);
+  margin-inline: auto;
+}
+.section { padding: var(--space-12) 0; }
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+}
+@media (min-width: 780px) {
+  .grid { grid-template-columns: 2fr 1fr; }
+}
+
+/* 4) Header & Navigation */
+.site-header {
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0));
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  backdrop-filter: blur(8px);
+  z-index: 50;
+}
+.site-header .container { display: flex; align-items: center; justify-content: space-between; padding: var(--space-4) 0; }
+.nav { list-style: none; display: flex; gap: var(--space-4); padding: 0; margin: 0; }
+.nav a { text-decoration: none; color: var(--muted); padding: var(--space-2) var(--space-3); border-radius: .6rem; transition: color .2s, background .2s; }
+.nav a:hover, .nav a:focus-visible { color: var(--text); background: rgba(255,255,255,0.06); }
+
+/* 5) Hero */
+.hero {
+  padding: clamp(3rem, 8vw, 6rem) 0;
+  background: radial-gradient(1200px 500px at 10% -10%, rgba(110,168,254,.25), transparent 60%),
+              radial-gradient(800px 400px at 90% 0%, rgba(110,168,254,.12), transparent 55%);
+  border-bottom: 1px solid var(--border);
+}
+.hero h2 { font-size: clamp(1.75rem, 3.5vw, 2.5rem); margin: 0 0 var(--space-4); letter-spacing: .3px; }
+.hero p { color: var(--muted); max-width: 65ch; }
+
+/* 6) Typography */
+h1, h2, h3, h4 { line-height: 1.15; margin: 0 0 var(--space-4); }
+h1 { font-size: clamp(2rem, 4vw, 3rem); }
+h2 { font-size: clamp(1.5rem, 3vw, 2.25rem); }
+h3 { font-size: clamp(1.25rem, 2.5vw, 1.5rem); }
+h4 { font-size: 1.1rem; color: var(--muted); }
+
+p { margin: 0 0 var(--space-4); }
+ul, ol { padding-left: 1.25rem; }
+code, pre { font-family: var(--font-mono); background: #0b0e14; padding: 0.15em 0.35em; border-radius: 0.4rem; }
+pre { padding: var(--space-4); overflow: auto; border: 1px solid var(--border); border-radius: var(--radius); }
+
+/* 7) Cards / Panels */
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--space-6);
+}
+
+/* 8) Buttons */
+.button, button, [type="button"], [type="submit"], [role="button"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: .7rem 1rem;
+  border-radius: .8rem;
+  border: 1px solid transparent;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform .06s ease, box-shadow .2s ease, filter .2s ease;
+  box-shadow: 0 8px 18px rgba(110,168,254,.25);
+}
+.button:hover, button:hover { filter: brightness(1.05); transform: translateY(-1px); }
+.button:active, button:active { transform: translateY(0); filter: brightness(.98); }
+.button.is-ghost { background: transparent; color: var(--text); border-color: var(--border); box-shadow: none; }
+
+/* 9) Asides / Accents */
+.section.accent {
+  background: linear-gradient(180deg, rgba(110,168,254,.1), rgba(110,168,254,0) 65%);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+/* 10) Footer */
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: var(--space-6) 0;
+  color: var(--muted);
+}
+
+/* 11) Utilities */
+.mt-0 { margin-top: 0 !important; }
+.mb-0 { margin-bottom: 0 !important; }
+.mt-4 { margin-top: var(--space-4) !important; }
+.mb-4 { margin-bottom: var(--space-4) !important; }
+.center { text-align: center !important; }
+.max-w-prose { max-width: 65ch; }
+
+/* 12) Responsive niceties */
+@media (max-width: 480px) {
+  .nav { gap: var(--space-2); }
+  .nav a { padding: var(--space-1) var(--space-2); }
+}
