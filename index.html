@@ -1,70 +1,58 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <title>Latgale Map</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+  // --- helper: safe getter ---
+  const getNAME1 = f => (f && f.properties && f.properties.NAME_1) ? f.properties.NAME_1 : '';
 
-  <!-- Leaflet CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  // --- categorical colors by NAME_1 (tweak as you like) ---
+  const regionColors = {
+    'Latgale':   '#111111',   // special (outline only + light fill below)
+    'Vidzeme':   '#377eb8',
+    'Kurzeme':   '#4daf4a',
+    'Zemgale':   '#ff7f00',
+    'Riga':      '#984ea3'
+  };
+  const fallbackFill = '#cccccc';
 
-  <style>
-    #map { height: 100vh; margin: 0; }
-  </style>
-</head>
-<body>
-  <div id="map"></div>
+  // --- style function driven by NAME_1 ---
+  function polygonStyle(feature) {
+    const name1 = getNAME1(feature);
 
-  <!-- Leaflet JS -->
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    if (name1 === 'Latgale') {
+      // bold outline, faint fill
+      return {
+        color: '#111111',
+        weight: 3,
+        fillColor: '#ffffff',
+        fillOpacity: 0.15
+      };
+    }
 
-  <script>
-    // Initialize map (Latgale roughly centered)
-    var map = L.map('map', {
-      center: [56.5, 27.0],
-      zoom: 7,
-      zoomControl: true,
-      attributionControl: false
+    // other regions (use palette; fall back if unknown)
+    return {
+      color: '#222222',
+      weight: 1,
+      fillColor: regionColors[name1] || fallbackFill,
+      fillOpacity: 0.18
+    };
+  }
+
+  // --- build the layer ---
+  let polygonsLayer;
+  fetch('Base_map_Latgale.geojson')
+    .then(r => r.json())
+    .then(data => {
+      polygonsLayer = L.geoJSON(data, {
+        style: polygonStyle,
+        onEachFeature: (feature, layer) => {
+          const name1 = getNAME1(feature) || 'Unknown region';
+          layer.bindPopup(name1);
+
+          // simple hover emphasis
+          layer.on('mouseover', () => layer.setStyle({ weight: (layer.options.weight || 1) + 1 }));
+          layer.on('mouseout',  () => polygonsLayer.resetStyle(layer));
+        }
+      }).addTo(map);
+
+      // zoom to polygons
+      try { map.fitBounds(polygonsLayer.getBounds(), { padding: [20, 20] }); } catch (e) {}
     });
-
-    // Load base map (Latvia, Latgale, neighbours)
-    fetch('Base_map_Latgale.geojson')
-      .then(res => res.json())
-      .then(data => {
-        L.geoJSON(data, {
-          style: function(feature) {
-            // Customize styling based on attributes if needed
-            return {
-              color: "black",
-              weight: 2,
-              fillOpacity: 0
-            };
-          }
-        }).addTo(map);
-      });
-
-    // Load towns (Latgalian names)
-    fetch('Latgale_towns.geojson')
-      .then(res => res.json())
-      .then(data => {
-        L.geoJSON(data, {
-          pointToLayer: function (feature, latlng) {
-            return L.circleMarker(latlng, {
-              radius: 5,
-              fillColor: "red",
-              color: "black",
-              weight: 1,
-              opacity: 1,
-              fillOpacity: 0.8
-            });
-          },
-          onEachFeature: function (feature, layer) {
-            if (feature.properties && feature.properties.name_latgalian) {
-              layer.bindPopup(feature.properties.name_latgalian);
-            }
-          }
-        }).addTo(map);
-      });
-  </script>
-</body>
-</html>
+</script>
