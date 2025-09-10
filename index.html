@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Index • Latgale Transmedia Storytelling</title>
+
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="Index • Latgale Style" />
+    <meta name="description" content="Starter template for an index.html wired to a CSS file named 'latgale style.css'." />
+
+    <!-- Favicon (optional) -->
+    <!-- <link rel="icon" href="/favicon.ico" sizes="any" /> -->
+
+    <!-- CSS: exact filename with a space, per your request -->
+    <!-- If you change the CSS filename to use a hyphen (e.g., latgale-style.css), update the href accordingly. -->
+    <link rel="preload" href="latgale style.css" as="style" />
+    <link rel="stylesheet" href="latgale style.css" />
+
+    <!-- Example: a small CSS reset (optional, remove if you don't want it)
+    <style>
+      *, *::before, *::after { box-sizing: border-box; }
+      body { margin: 0; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+      img, picture, video, canvas, svg { display: block; max-width: 100%; }
+      input, button, textarea, select { font: inherit; }
+      p, h1, h2, h3, h4, h5, h6 { overflow-wrap: break-word; }
+      #root, #__next { isolation: isolate; }
+    </style>
+    -->
+  </head>
+  <body>
+    <header class="site-header" role="banner">
+      <div class="container">
+        <h1>Welcome to Latgale Style</h1>
+        <nav aria-label="Primary">
+          <ul class="nav">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="home" class="site-main" role="main">
+      <section class="hero">
+        <div class="container">
+          <h2>Hero Section</h2>
+          <p>This is a starter template. Style it in <code>latgale style.css</code>.</p>
+          <a class="button" href="#cta">Call to Action</a>
+        </div>
+      </section>
+
+      <section id="about" class="section">
+        <div class="container grid">
+          <article>
+            <h3>About</h3>
+            <p>
+              Replace this with your content. Keep semantic HTML (headings in order,
+              lists for lists, etc.).
+            </p>
+          </article>
+          <aside>
+            <h4>Sidebar</h4>
+            <ul>
+              <li>Tip: Keep your CSS modular.</li>
+              <li>Tip: Use variables for colors & spacing.</li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <section id="cta" class="section accent">
+        <div class="container">
+          <h3>Get Started</h3>
+          <p>Hook up your components and customize the stylesheet.</p>
+          <button type="button">Primary Action</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+      <div class="container">
+        <small>© <span id="year"></span> Your Name</small>
+      </div>
+    </footer>
+
+    <script>
+      // Simple helper to keep the footer year current
+      document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
